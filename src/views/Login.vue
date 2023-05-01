@@ -30,43 +30,24 @@ export default({
             this.token =  tokenR;
             localStorage.setItem('token', this.token);
         },
-        setPageRedirect(){
-            router.push({ name: 'home' }) // -> /user/eduardo
-        },
         async LoginRequest(){
             const data = {
                 nome: this.user,
                 senha: this.password
             };
-
             try{
                 let response = await api.post('/auth/usuarios/login',data);
                 this.response = response;
             } catch(err){
                 console.log(err)
             }
-            console.log(this.response.data);
-            
-            // api.post('/auth/usuarios/login',data).then((response)=>{
-            // }).catch((err)=>{});
+            console.log("Responde: ", this.response);
+            if( this.response.status == 201){
 
-            // axios.post('https://erp-mlovi.herokuapp.com/auth/usuarios/login',data).then((response) =>{
-            //        console.log(response);
-            //        console.log(response.status);
-            //        this.stauts = response.status;
-            // }).catch((err)=>{});
-
-        
-
-            // console.log(this.status);
-
-            // if( this.status == 201){
-            //     this.setLocalStorage(response.data.token);
-            //     router.push({ name: 'dashboard' }) // -> /user/eduardo
-            // } else{
-            //     alert("Acessos Invalidos");
-            // }
-    }
+                router.push({ name: 'dashboard' });
+                this.setLocalStorage(this.response.data.token);
+            }
+        }
     },
     mounted(){
         if(localStorage.getItem('token')!=null){
