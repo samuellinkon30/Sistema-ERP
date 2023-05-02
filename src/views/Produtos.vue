@@ -18,7 +18,7 @@
                 <td>{{ produto.nome }}</td>
                 <td>{{ produto.descricao }}</td>
                 <td>R$ {{ produto.preco_compra }}</td>
-                <td>Editar</td>
+                <td class="link_product" v-on:click="PageProduct( produto.id )">Editar</td>
             </tr>
         </table>
         </div>
@@ -27,6 +27,7 @@
 
 <script>
 import api from '../utils/api';
+import router from '../router';
 
 export default({
     name: "Produtos",
@@ -44,6 +45,12 @@ export default({
             } catch(err){
                 console.log(err)
             }
+        },
+        PageProduct(idProduct){
+            console.log(idProduct);
+            router.push(`/produto/?${idProduct}`);
+
+
         }
     },
     created(){
@@ -54,5 +61,7 @@ export default({
 </script>
 
 <style>
-
+.link_product {
+    cursor: pointer;
+}
 </style>
