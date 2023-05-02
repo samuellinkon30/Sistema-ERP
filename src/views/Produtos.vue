@@ -10,7 +10,8 @@
                 <th>Nome</th>
                 <th>Descrição</th>
                 <th>Preço</th>
-                <th>Ação</th>
+                <th>Editar</th>
+                <th>Gerar</th>
             </tr>
             <tr v-for="(produto,index) in produtos ">
                 <td>{{ produto.id }}</td>
@@ -19,6 +20,7 @@
                 <td>{{ produto.descricao }}</td>
                 <td>R$ {{ produto.preco_compra }}</td>
                 <td class="link_product" v-on:click="PageProduct( produto.id )">Editar</td>
+                <td class="link_product" v-on:click="requestPdf( produto.id )">Gerar</td>
             </tr>
         </table>
         </div>
@@ -28,6 +30,8 @@
 <script>
 import api from '../utils/api';
 import router from '../router';
+import axios from 'axios';
+
 
 export default({
     name: "Produtos",
@@ -51,7 +55,26 @@ export default({
             router.push(`/produto/?${idProduct}`);
 
 
-        }
+        },
+        requestPdf(id) {
+            axios.request({
+            url: 'https://erp-mlovi.herokuapp.com/naofiscal/'+id,
+            method: 'POST',
+            responseType: 'blob',
+        })
+        .then(response => response.data)
+        .then(blob => {
+            const data = URL.createObjectURL(blob)
+            var link = document.createElement('a')
+            link.href = data
+            link.target = '_blank'
+            link.click()
+            window.URL.revokeObjectURL(blob)
+        })
+            .catch((error) => {
+            console.log(error)
+        })
+}
     },
     created(){
         this.loadProducts();

@@ -4,6 +4,7 @@ import Login from '../views/Login.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Produtos from '../views/Produtos.vue'
 import Produto from '../views/ProdutoView.vue'
+import Fiscal from '../views/Fiscal.vue'
 
 
 const routes = [
@@ -16,6 +17,11 @@ const routes = [
     path:'/login',
     name: 'login',
     component: Login
+  },
+  {
+    path:'/fiscal',
+    name: 'fical',
+    component: Fiscal
   },
   {
     path:'/dashboard',
