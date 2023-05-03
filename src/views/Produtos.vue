@@ -1,7 +1,10 @@
 <template>
     <div class="produtos">
         <h1>Painel</h1>
-        <div class="itens">
+        <div class="loading" v-show="!isLoaded">
+            <h1><img src="../assets/load.gif"></h1>
+        </div>
+        <div class="itens" v-show="isLoaded">
          Lista de Produtos
             <table>
             <tr>
@@ -38,6 +41,7 @@ export default({
     data(){
         return{
             produtos: null,
+            isLoaded: false,
         }
     },
     methods:{
@@ -45,7 +49,7 @@ export default({
             try{
                 const response = await api.get('/produtos');
                 this.produtos = response.data;
-                console.log(this.produtos);
+                this.isLoaded = true;
             } catch(err){
                 console.log(err)
             }
@@ -59,7 +63,7 @@ export default({
         requestPdf(id) {
             axios.request({
             url: 'https://erp-mlovi.herokuapp.com/naofiscal/'+id,
-            method: 'POST',
+            method: 'GET',
             responseType: 'blob',
         })
         .then(response => response.data)

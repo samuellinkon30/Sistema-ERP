@@ -9,12 +9,7 @@ import Fiscal from '../views/Fiscal.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path:'/login',
+    path:'/',
     name: 'login',
     component: Login
   },

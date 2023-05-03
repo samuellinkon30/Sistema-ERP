@@ -2,6 +2,7 @@
     <div class="Cupom">
         <button v-on:click="requestPdf">GERAR</button>
         {{ response }}
+        <h1 v-show="invalido">PDF INVALIDO</h1>
     </div>
 </template>
 
@@ -16,16 +17,22 @@ export default({
     data(){
         return{
             response:null,
+            invalido:null,
         }
     },
     methods:{
         requestPdf() {
             axios.request({
-            url: 'https://erp-mlovi.herokuapp.com/naofiscal/2',
-            method: 'POST',
+            url: 'https://erp-mlovi.herokuapp.com/naofiscal/22',
+            method: 'GET',
             responseType: 'blob',
         })
-        .then(response => response.data)
+        .then(
+        this.invalido = response => response.status   
+        )
+        .then(
+            response => response.data    
+        )
         .then(blob => {
             const data = URL.createObjectURL(blob)
             var link = document.createElement('a')
