@@ -3,7 +3,9 @@
     <div class="login">
 
         <div class="avatar">
-            <img src="../assets/avatar.png">
+            <img v-show="!complete" src="../assets/avatar.png">
+            <img v-show="complete" style="width: 180px; left: 14.9%;" src="../assets/avatar2.png">
+
         </div>
 
         <form action=""  @submit.prevent="LoginRequest">
@@ -127,9 +129,16 @@ input.input_password:focus+.span_input_password::before{
     font-size: 15px;
     left: -5px;
 }
-
+.avatar{
+    height: 200px;
+    display: flex;
+    justify-content: center;   
+}
 .avatar img{
     width: 150px;
+    position: absolute;
+    left: 20%;
+    top: 0;
 }
 .box_input{
     border-bottom: 2px solid #d9d9d9;
